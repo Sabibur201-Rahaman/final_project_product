@@ -14,4 +14,6 @@ router.get("/profileUpdate",AuthVerifyMiddleware,UserController.profileUpdate);
 router.post("/createProduct",AuthVerifyMiddleware,ProductController.createProduct);
 router.post("/updateProductStats/:id",AuthVerifyMiddleware,ProductController.updateProductStats);
 router.post("/deleteProduct/:id",AuthVerifyMiddleware,ProductController.deleteProduct);
+router.get("/listProductByBrand/:brand",AuthVerifyMiddleware,ProductController.listProductByBrand);
+router.get("/listProductByCategory/:category",AuthVerifyMiddleware,ProductController.listProductByCategory);
 module.exports=router;

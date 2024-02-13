@@ -71,3 +71,61 @@ exports.deleteProduct= (req, res) => {
     }
 };
   
+
+exports.listProductByBrand = async (req, res) => {
+  try {
+    let brand = req.params.brand;
+    let email = req.headers['email'];
+
+    const data = await ProductModel.aggregate([
+      { $match: { brand: brand, email: email } },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          description: 1,
+          brand: 1,
+          createdDate: {
+            $dateToString: {
+              date: "$createdDate",
+              format: "%d-%m-%Y"
+            }
+          }
+        }
+      }
+    ]);
+    res.status(200).json({ status: "success", data: data });
+  } catch (error) {
+    res.status(500).json({ status: "error", message: error.message });
+  }
+}
+
+
+
+exports.listProductByCategory = async (req, res) => {
+  try {
+    let category = req.params.category;
+    let email = req.headers['email'];
+
+    const data = await ProductModel.aggregate([
+      { $match: { category: category, email: email } },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          description: 1,
+          category: 1,
+          createdDate: {
+            $dateToString: {
+              date: "$createdDate",
+              format: "%d-%m-%Y"
+            }
+          }
+        }
+      }
+    ]);
+    res.status(200).json({ status: "success", data: data });
+  } catch (error) {
+    res.status(500).json({ status: "error", message: error.message });
+  }
+}
