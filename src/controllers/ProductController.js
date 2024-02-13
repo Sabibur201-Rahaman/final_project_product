@@ -17,29 +17,6 @@ exports.createProduct = async(req, res) => {
   }
 };
 
-
-// exports.createProduct = async (req, res) => {
-//   try {
-//     let reqBody = req.body;
-//     reqBody.email = req.headers["email"];
-    
-//     let newProduct = await ProductModel.create(reqBody);
-//     console.log(newProduct)
-//     res.status(200).json({ status: "success", data: newProduct });
-//   } catch (err) {
-//     if (err.code === 11000 && err.keyPattern && err.keyPattern.email === 1) {
-//       // Duplicate key error for email
-//       res.status(400).json({ status: "fail", message: "Email already exists" });
-//     } else {
-//       // Other errors
-//       console.error(err);
-//       res.status(500).json({ status: "error", message: "Internal server error" });
-//     }
-//   }
-// };
-
-
-
 exports.deleteProduct= (req, res) => {
     try {
       let id=req.params.id
@@ -129,3 +106,36 @@ exports.listProductByCategory = async (req, res) => {
     res.status(500).json({ status: "error", message: error.message });
   }
 }
+
+
+exports.productsBrandCounts = async (req, res) => {
+  try {
+    let email = req.headers['email'];
+
+    const data = await ProductModel.aggregate([
+      { $match: { email: email } },
+      { $group: { _id: "$brand", count: { $sum: 1 } } }
+    ]);
+
+    res.status(200).json({ status: "success", data: data });
+  } catch (error) {
+    res.status(500).json({ status: "error", message: error.message });
+  }
+}
+
+
+exports.productsCategoryCounts = async (req, res) => {
+  try {
+    let email = req.headers['email'];
+
+    const data = await ProductModel.aggregate([
+      { $match: { email: email } },
+      { $group: { _id: "$category", count: { $sum: 1 } } }
+    ]);
+
+    res.status(200).json({ status: "success", data: data });
+  } catch (error) {
+    res.status(500).json({ status: "error", message: error.message });
+  }
+}
+
