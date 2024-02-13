@@ -17,16 +17,22 @@ exports.createProduct = async(req, res) => {
   }
 };
 
-exports.deleteProduct= (req, res) => {
-    try {
-      let id=req.params.id
-      let Query={_id:id};
-      ProductModel.remove(Query);
-      res.status(200).json({ status: "success", data: "data" });
-    } catch {
-      res.status(400).json({ status: "fail", data: "some issues" });
+exports.deleteProduct = async (req, res) => {
+  try {
+    let id = req.params.id;
+    let query = { _id: id };
+    let data = await ProductModel.deleteOne(query);
+    if (data.deletedCount > 0) {
+      res.status(200).json({ status: "success", data: data });
+    } else {
+      res.status(404).json({ status: "fail", data: "No document found to delete" });
     }
-  };
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ status: "fail", message: "Some issues occurred" });
+  }
+};
+
   exports.updateProductStats = async (req, res) => {
     try {
         let id = req.params.id;
