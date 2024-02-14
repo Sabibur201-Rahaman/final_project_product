@@ -1,10 +1,13 @@
 import React from 'react'
+import MasterLayoutPage from './MasterLayoutPage'
 
 function DashBoardPage() {
   return (
-    <div>
-      <h1>this is my DashBoard</h1>
-    </div>
+    
+      <MasterLayoutPage>
+        <h2>DashBoard</h2>
+      </MasterLayoutPage>
+
   )
 }
 
