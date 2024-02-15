@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { Suspense } from 'react'
+import MasterLayoutPage from './MasterLayoutPage'
+import LazyLoader from '../components/masterLayout/LazyLoader'
 
 function CreatePage() {
   return (
-    <div>
-      
-    </div>
+    <MasterLayoutPage>
+      <h1>createpage</h1>
+      <Suspense fallback={<LazyLoader/>}>
+
+        </Suspense>
+    </MasterLayoutPage>
   )
 }
 

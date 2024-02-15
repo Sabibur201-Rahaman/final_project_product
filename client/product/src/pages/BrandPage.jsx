@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { Suspense,lazy } from 'react'
 import BarndPage from './BrandPage';
+import MasterLayoutPage from './MasterLayoutPage';
+import LazyLoader from '../components/masterLayout/LazyLoader';
 
 function BrandPage() {
   return (
-    <div>
-      <h2>welcome my awesome brandpage</h2>
-    </div>
+   <MasterLayoutPage>
+    <h2>welcome to brandpage</h2>
+    <Suspense fallback={<LazyLoader/>}>
+
+        </Suspense>
+   </MasterLayoutPage>
   )
 }
 

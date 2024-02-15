@@ -8,10 +8,15 @@ import {
   AiOutlineMenuUnfold,
   AiOutlineUser,
 } from "react-icons/ai";
-// import { MdOutlineCancelPresentation, RiDashboardLine } from "react-icons";
+import { MdOutlineCancelPresentation } from "react-icons/md";
+import { FaApple } from "react-icons/fa";
+import { RiDashboardLine } from "react-icons/ri";
+import { FaPlus } from "react-icons/fa";
+import { FaLaptop } from "react-icons/fa";
 
 function MasterLayoutPage(props) {
-  let contentRef,sideNavRef=useRef();
+  let contentRef,
+    sideNavRef = useRef();
 
   const MenuBarClickHandler = () => {
     let sideNav = sideNavRef;
@@ -76,7 +81,7 @@ function MasterLayoutPage(props) {
           to="/"
           end
         >
-          {/* <RiDashboardLine className="side-bar-item-icon" /> */}
+          <RiDashboardLine className="side-bar-item-icon" />
           <span className="side-bar-item-caption">Dashboard</span>
         </NavLink>
 
@@ -86,7 +91,7 @@ function MasterLayoutPage(props) {
               ? "side-bar-item-active side-bar-item mt-2"
               : "side-bar-item mt-2"
           }
-          to="/Create"
+          to="/create"
         >
           <AiOutlineEdit className="side-bar-item-icon" />
           <span className="side-bar-item-caption">Create New</span>
@@ -98,9 +103,9 @@ function MasterLayoutPage(props) {
               ? "side-bar-item-active side-bar-item mt-2"
               : "side-bar-item mt-2"
           }
-          to="/All"
+          to="/new"
         >
-          {/* <BsListNested className="side-bar-item-icon" /> */}
+          <FaPlus className="side-bar-item-icon" />
           <span className="side-bar-item-caption">New product</span>
         </NavLink>
 
@@ -110,9 +115,9 @@ function MasterLayoutPage(props) {
               ? "side-bar-item-active side-bar-item mt-2"
               : "side-bar-item mt-2"
           }
-          to="/Progress"
+          to="/brand"
         >
-          {/* <BsHourglass className="side-bar-item-icon" /> */}
+          <FaApple className="side-bar-item-icon" />
           <span className="side-bar-item-caption">Brand</span>
         </NavLink>
 
@@ -122,9 +127,9 @@ function MasterLayoutPage(props) {
               ? "side-bar-item-active side-bar-item mt-2"
               : "side-bar-item mt-2"
           }
-          to="/Completed"
+          to="/category"
         >
-          <AiOutlineCheckCircle className="side-bar-item-icon" />
+          <FaLaptop className="side-bar-item-icon" />
           <span className="side-bar-item-caption">Category</span>
         </NavLink>
       </div>
