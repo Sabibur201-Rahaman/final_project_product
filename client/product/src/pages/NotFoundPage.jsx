@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import MasterLayoutPage from "./MasterLayoutPage";
 import LazyLoader from "../components/masterLayout/LazyLoader";
 const NotFound = lazy(() => import("../components/notFound/NotFound"));
