@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import toast from "react-hot-toast";
 import { IsEmail, IsEmpty, IsMobile } from "../../helper/FormHelper";
+import { RegistrationRequest } from "../../ApiRequest/ApiRequest";
 function Registration() {
   let emailRef,
     firstNameRef,
@@ -29,8 +30,12 @@ function Registration() {
       toast.error("password is required");
 
     } else {
-      toast.error("submited succesfully");
-    }
+      RegistrationRequest(email,firstName,lastName,mobile,password).then((result)=>{
+        if(result==true){
+
+        }
+      })
+        }
   };
   return (
     <div className="container">

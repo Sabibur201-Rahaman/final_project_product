@@ -8,7 +8,7 @@ exports.registration = async (req, res) => {
     const data = await UsersModel.create(reqBody);
     res.status(200).json({ status: "success", data: data });
   } catch (err) {
-    res.status(400).json({ status: "fail", data: err });
+    res.status(200).json({ status: "fail", data: err });
   }
 };
 
