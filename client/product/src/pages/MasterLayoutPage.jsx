@@ -13,6 +13,7 @@ import { FaApple } from "react-icons/fa";
 import { RiDashboardLine } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa";
 import { FaLaptop } from "react-icons/fa";
+import { Toaster } from "react-hot-toast";
 
 function MasterLayoutPage(props) {
   let contentRef,
@@ -136,6 +137,7 @@ function MasterLayoutPage(props) {
 
       <div ref={(div) => (contentRef = div)} className="content">
         {props.children}
+        <Toaster position="Bottom-center"/>
       </div>
     </Fragment>
   );

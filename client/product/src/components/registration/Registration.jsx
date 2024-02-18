@@ -1,24 +1,36 @@
 import React, { useRef } from "react";
-
+import toast from "react-hot-toast";
+import { IsEmail, IsEmpty, IsMobile } from "../../helper/FormHelper";
 function Registration() {
   let emailRef,
-      firstNameRef,
-      lastNameRef,
-      mobileRef,
-      passwordRef = useRef();
+    firstNameRef,
+    lastNameRef,
+    mobileRef,
+    passwordRef = useRef();
   const onRegistration = () => {
-    
     let email = emailRef.value;
-    debugger;
     let firstName = firstNameRef.value;
-    debugger;
     let lastName = lastNameRef.value;
-    debugger;
     let mobile = mobileRef.value;
-    debugger;
     let password = passwordRef.value;
-    debugger;
-    console.log(email + firstName + lastName + mobile + password);
+
+    if (IsEmail(email)) {
+      toast.error("Valid Email Address is required");
+    } else if (IsEmpty(firstName)) {
+      toast.error("firstName is required");
+    } else if (IsEmpty(lastName)) {
+      toast.error("lastName is required");
+
+    } else if (!IsMobile(mobile)) {
+      toast.error("valid mobile no is required");
+
+      ErrorToast("valid Mobile is required");
+    } else if (IsEmpty(password)) {
+      toast.error("password is required");
+
+    } else {
+      toast.error("submited succesfully");
+    }
   };
   return (
     <div className="container">
@@ -33,7 +45,7 @@ function Registration() {
                   <div className="col-md-4 p-2">
                     <label>Email Address</label>
                     <input
-                      ref={(input) => emailRef = input}
+                      ref={(input) => (emailRef = input)}
                       placeholder="User Email"
                       className="form-control animated fadeInUp"
                       type="email"
