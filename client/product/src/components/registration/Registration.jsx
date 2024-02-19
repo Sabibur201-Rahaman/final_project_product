@@ -2,12 +2,16 @@ import React, { useRef } from "react";
 import toast from "react-hot-toast";
 import { IsEmail, IsEmpty, IsMobile } from "../../helper/FormHelper";
 import { RegistrationRequest } from "../../ApiRequest/ApiRequest";
+import { useNavigate } from "react-router-dom";
+
 function Registration() {
   let emailRef,
     firstNameRef,
     lastNameRef,
     mobileRef,
     passwordRef = useRef();
+    let navigate=useNavigate()
+
   const onRegistration = () => {
     let email = emailRef.value;
     let firstName = firstNameRef.value;
@@ -25,14 +29,13 @@ function Registration() {
     } else if (!IsMobile(mobile)) {
       toast.error("valid mobile no is required");
 
-      ErrorToast("valid Mobile is required");
     } else if (IsEmpty(password)) {
       toast.error("password is required");
 
     } else {
       RegistrationRequest(email,firstName,lastName,mobile,password).then((result)=>{
         if(result==true){
-
+          navigate('/login')
         }
       })
         }

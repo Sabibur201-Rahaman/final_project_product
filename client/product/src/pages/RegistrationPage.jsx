@@ -7,7 +7,7 @@ const Registration = lazy(() =>
 function RegistrationPage() {
   return (
     <MasterLayoutPage>
-      <h2>welcome to Registration</h2>
+      {/* <h2>welcome to Registration</h2> */}
       <Suspense fallback={<LazyLoader />}>
         <Registration />
       </Suspense>

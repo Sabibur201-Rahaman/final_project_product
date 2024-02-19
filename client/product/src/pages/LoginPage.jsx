@@ -5,7 +5,7 @@ const Login = lazy(() => import("../components/login/Login"));
 function LoginPage() {
   return (
     <MasterLayoutPage>
-      <h2>login</h2>
+      {/* <h2>login</h2> */}
       <Suspense fallback={<LazyLoader />}>
         <Login />
       </Suspense>
