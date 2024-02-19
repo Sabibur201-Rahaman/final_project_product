@@ -1,6 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import { hideLoader, showLoader } from "../redux/state-slice/SettingSlice";
+import Store from "../redux/store/Store";
 const BaseUrl = "http://localhost:9000/api/v1";
 export function RegistrationRequest(
     email,
@@ -10,6 +11,7 @@ export function RegistrationRequest(
     password,
     photo
   ) {
+    Store.dispatch(showLoader())
     let URL = BaseUrl + "/registration";
     let PostBody = {
       email: email,
@@ -22,6 +24,8 @@ export function RegistrationRequest(
     return axios
       .post(URL, PostBody) // Corrected order of arguments
       .then((res) => {
+        Store.dispatch(hideLoader())
+
         if (res.status === 200) {
           if (res.data["status"] === "fail") {
             if (res.data["data"]["keyPattern"]["email"]) {
@@ -41,6 +45,8 @@ export function RegistrationRequest(
         }
       })
       .catch((err) => {
+        Store.dispatch(hideLoader())
+
         toast.error("Something went wrong");
         return false;
       });
