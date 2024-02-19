@@ -14,7 +14,7 @@ import { RiDashboardLine } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa";
 import { FaLaptop } from "react-icons/fa";
 import { Toaster } from "react-hot-toast";
-
+import Footer from '../footer/Footer'
 function MasterLayoutPage(props) {
   let contentRef,
     sideNavRef = useRef();
@@ -139,6 +139,7 @@ function MasterLayoutPage(props) {
         {props.children}
         <Toaster position="Bottom-center"/>
       </div>
+      <Footer/>
     </Fragment>
   );
 }
