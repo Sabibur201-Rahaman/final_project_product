@@ -11,15 +11,18 @@ export async function LoginRequest(email, password) {
   try {
     Store.dispatch(showLoader());
     let URL = BaseUrl + "/login";
-    debugger
     let PostBody = { "email": email, "password": password };
-    debugger
-    const res = await axios.post(URL, PostBody);
-    debugger
+    // const res=await axios.post(URL,PostBody)
+    const response = await fetch(URL, {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(PostBody), // body data type must match "Content-Type" header
+    });
+
     Store.dispatch(hideLoader());
-    debugger
     if (res.status === 200) {
-      debugger
       setToken(res.data['token']);
       setUserDetails(res.data['data']);
       toast.success("Login Success");
@@ -29,7 +32,7 @@ export async function LoginRequest(email, password) {
       return false;
     }
   } catch (err) {
-    // console.log(err)
+    console.log(err)
     toast.error("Something Went Wrong");
     Store.dispatch(hideLoader());
     return false;
