@@ -1,9 +1,15 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Container } from 'react-bootstrap';
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineCalendar } from "react-icons/ai";
+import { ProductListByBrand } from "../../ApiRequest/ApiRequest";
 
 function Brand() {
+  useEffect(()=>{
+    ProductListByBrand('Epson')
+    ProductListByBrand('hp')
+    ProductListByBrand('apple')
+  },[])
   return (
     <Fragment>
       <Container fluid={true} className="content-body">
