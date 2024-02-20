@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Container, Row } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 function Create() {
+  let titleRef,descriptionRef=useRef()
+  let navigate=useNavigate();
+  const CreateNew=()=>{
+    
+  }
   return (
     <div>
       <Container fluid={true} className="content-body">

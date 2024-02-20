@@ -12,14 +12,14 @@ export async function LoginRequest(email, password) {
     Store.dispatch(showLoader());
     let URL = BaseUrl + "/login";
     let PostBody = { "email": email, "password": password };
-    // const res=await axios.post(URL,PostBody)
-    const response = await fetch(URL, {
-      method: "POST", 
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(PostBody), // body data type must match "Content-Type" header
-    });
+    const res=await axios.post(URL,PostBody)
+    // const res = await fetch(URL, {
+    //   method: "POST", 
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(PostBody), // body data type must match "Content-Type" header
+    // });
 
     Store.dispatch(hideLoader());
     if (res.status === 200) {
