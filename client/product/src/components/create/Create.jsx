@@ -1,11 +1,27 @@
 import React, { useRef } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { IsEmpty } from "../../helper/FormHelper";
+import { NewProductRequest } from "../../ApiRequest/ApiRequest";
 function Create() {
   let titleRef,descriptionRef=useRef()
   let navigate=useNavigate();
   const CreateNew=()=>{
-    
+let title=titleRef.value;
+let description=descriptionRef.value;
+if(IsEmpty(titleRef)){
+toast.error('title is required')
+}
+else if(IsEmpty(description)){
+toast.error('description is required')
+}
+else{
+  NewProductRequest(title,description).then((res)=>{
+    if(res===true){
+      navigate('/new')
+    }
+  })
+}
   }
   return (
     <div>
@@ -17,14 +33,14 @@ function Create() {
                 <h4>Create New</h4>
                 <br />
                 <input
-                  // ref={(input) => (titleRef = input)}
+                  ref={(input) => (titleRef = input)}
                   placeholder="Product Name"
                   className="form-control animated fadeInUp"
                   type="text"
                 />
                 <br />
                 <textarea
-                  // ref={(input) => (descriptionRef = input)}
+                  ref={(input) => (descriptionRef = input)}
                   rows={5}
                   placeholder="Product Description"
                   className="form-control animated fadeInUp"
@@ -32,7 +48,7 @@ function Create() {
                 />
                 <br />
                 <button
-                  // onClick={CreateNew}
+                  onClick={CreateNew}
                   className="btn float-end btn-primary"
                 >
                   Create

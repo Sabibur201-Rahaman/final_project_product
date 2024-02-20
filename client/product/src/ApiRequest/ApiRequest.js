@@ -2,29 +2,42 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { hideLoader, showLoader } from "../redux/state-slice/SettingSlice";
 import Store from "../redux/store/Store";
-import { setToken, setUserDetails } from "../helper/SessionHelper";
+import { getToken, setToken, setUserDetails } from "../helper/SessionHelper";
 const BaseUrl = "http://localhost:9000/api/v1";
 
+export async function NewProductRequest(title, description) {
+  const AxiosHeader={headers:{'token':getToken()}}
+  try {
+    Store.dispatch(showLoader());
+    let URL = BaseUrl + "/createProduct";
+    let PostBody = { title: title, description: description };
+    const res = await axios.post(URL, PostBody,AxiosHeader);
 
-
+    Store.dispatch(hideLoader());
+    if (res.status === 200) {
+      toast.success("product created");
+      return true;
+    } else {
+      toast.error("Something Went Wrong");
+      return false;
+    }
+  } catch (err) {
+    toast.error("Something Went Wrong");
+    Store.dispatch(hideLoader());
+    return false;
+  }
+}
 export async function LoginRequest(email, password) {
   try {
     Store.dispatch(showLoader());
     let URL = BaseUrl + "/login";
-    let PostBody = { "email": email, "password": password };
-    const res=await axios.post(URL,PostBody)
-    // const res = await fetch(URL, {
-    //   method: "POST", 
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(PostBody), // body data type must match "Content-Type" header
-    // });
+    let PostBody = { email: email, password: password };
+    const res = await axios.post(URL, PostBody);
 
     Store.dispatch(hideLoader());
     if (res.status === 200) {
-      setToken(res.data['token']);
-      setUserDetails(res.data['data']);
+      setToken(res.data["token"]);
+      setUserDetails(res.data["data"]);
       toast.success("Login Success");
       return true;
     } else {
@@ -32,17 +45,21 @@ export async function LoginRequest(email, password) {
       return false;
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
     toast.error("Something Went Wrong");
     Store.dispatch(hideLoader());
     return false;
   }
 }
 
-
-
-  
-export async function RegistrationRequest(email, firstName, lastName, mobile, password, photo) {
+export async function RegistrationRequest(
+  email,
+  firstName,
+  lastName,
+  mobile,
+  password,
+  photo
+) {
   try {
     Store.dispatch(showLoader());
     let URL = BaseUrl + "/registration";
