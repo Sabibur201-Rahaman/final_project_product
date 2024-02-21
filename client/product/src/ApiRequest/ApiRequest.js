@@ -18,18 +18,19 @@ export async function ProductListBycategory(Category) {
       if(Category==='printer'){
         Store.dispatch(SetCategoryProduct(res.data['data']))
       }
-      else if(Category==='mobile'){
-        Store.dispatch(SetCategoryProduct(res.data['data']))
-      }
-      else if(Category==='laptop'){
-        Store.dispatch(SetCategoryProduct(res.data['data']))
-      }
+      // else if(Category==='mobile'){
+      //   Store.dispatch(SetCategoryProduct(res.data['data']))
+      // }
+      // else if(Category==='laptop'){
+      //   Store.dispatch(SetCategoryProduct(res.data['data']))
+      // }
     } else {
       toast.error("Something Went Wrong");
       return false;
     }
   } catch (err) {
-    toast.error("Something Went Wrong");
+    console.log(err)
+    toast.error("!Something Went Wrong");
     Store.dispatch(hideLoader());
     return false;
   }
@@ -39,7 +40,6 @@ export async function ProductListByBrand(Brand) {
   try {
     Store.dispatch(showLoader());
     let URL = BaseUrl + "/listProductByBrand/"+Brand;
-    // let PostBody = { title: title, description: description };
     const res = await axios.get(URL,AxiosHeader);
 
     Store.dispatch(hideLoader());
@@ -58,18 +58,21 @@ export async function ProductListByBrand(Brand) {
       return false;
     }
   } catch (err) {
+    console.log(err)
     toast.error("Something Went Wrong");
     Store.dispatch(hideLoader());
     return false;
   }
 }
 
-export async function NewProductRequest(title, description) {
+
+
+export async function NewProductRequest(title, description,category,brand) {
   const AxiosHeader={headers:{'token':getToken()}}
   try {
     Store.dispatch(showLoader());
     let URL = BaseUrl + "/createProduct";
-    let PostBody = { title: title, description: description };
+    let PostBody = { title: title, description: description,category:category,brand:brand };
     const res = await axios.post(URL, PostBody,AxiosHeader);
 
     Store.dispatch(hideLoader());

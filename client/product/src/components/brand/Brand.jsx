@@ -3,13 +3,29 @@ import { Container } from 'react-bootstrap';
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { ProductListByBrand } from "../../ApiRequest/ApiRequest";
+import { useSelector } from "react-redux";
 
 function Brand() {
-  useEffect(()=>{
-    ProductListByBrand('Epson')
-    ProductListByBrand('hp')
-    ProductListByBrand('apple')
-  },[])
+  const BrandList=useSelector((state)=>state.product.brand)
+
+  // useEffect(()=>{
+  //   ProductListByBrand('Epson')
+  //   // ProductListByBrand('hp')
+  //   // ProductListByBrand('apple')
+  // },[])
+
+  useEffect(() => {
+    Promise.all([
+      ProductListByBrand('Epson'),
+      ProductListByBrand('hp'),
+      ProductListByBrand('apple'),
+    ]).then(() => {
+      // Handle completion if necessary
+    }).catch(error => {
+      // Error handling if one of the promises fails
+    });
+  }, []);
+  
   return (
     <Fragment>
       <Container fluid={true} className="content-body">
@@ -29,17 +45,17 @@ function Brand() {
           </div>
         </div>
         <div className="row p-0 m-0">
-          {/* {CompletedList.map((item, i) => ( */}
+          {BrandList.map((item, i) => (
             <div
               
               className="col-12 col-lg-4 col-sm-6 col-md-4  p-2"
             >
               <div className="card h-100">
                 <div className="card-body">
-                  <h6 className="animated fadeInUp"></h6>
-                  <p className="animated fadeInUp"></p>
+                  <h6 className="animated fadeInUp">{item.title}</h6>
+                  <p className="animated fadeInUp">{item.description}</p>
                   <p className="m-0 animated fadeInUp p-0">
-                    <AiOutlineCalendar /> 
+                    <AiOutlineCalendar /> {item.createdDate}
                     {/* <a
                       onClick={StatusChangeItem.bind(
                         this,
@@ -53,15 +69,15 @@ function Brand() {
                     <a
                       // onClick={DeleteItem.bind(this, item._id)}
                       className="icon-nav text-danger mx-1"
-                    >
+                    >{item.category}
                       <AiOutlineDelete />
                     </a>
-                    <a className="badge float-end bg-success">status</a>
+                    <a className="badge float-end bg-success">{item.brand}</a>
                   </p>
                 </div>
               </div>
             </div>
-          {/* ))} */}
+           ))} 
         </div>
       </Container>
     </Fragment>

@@ -3,12 +3,15 @@ import { Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { IsEmpty } from "../../helper/FormHelper";
 import { NewProductRequest } from "../../ApiRequest/ApiRequest";
+import Category from './../category/Category';
 function Create() {
-  let titleRef,descriptionRef=useRef()
+  let titleRef,descriptionRef,brandRef,categoryRef=useRef()
   let navigate=useNavigate();
   const CreateNew=()=>{
 let title=titleRef.value;
 let description=descriptionRef.value;
+let category=categoryRef.value;
+let brand=brandRef.value;
 if(IsEmpty(titleRef)){
 toast.error('title is required')
 }
@@ -16,7 +19,7 @@ else if(IsEmpty(description)){
 toast.error('description is required')
 }
 else{
-  NewProductRequest(title,description).then((res)=>{
+  NewProductRequest(title,description,category,brand).then((res)=>{
     if(res===true){
       navigate('/new')
     }
@@ -43,6 +46,22 @@ else{
                   ref={(input) => (descriptionRef = input)}
                   rows={5}
                   placeholder="Product Description"
+                  className="form-control animated fadeInUp"
+                  type="text"
+                />
+                <br />
+                <textarea
+                  ref={(input) => (brandRef = input)}
+                  rows={5}
+                  placeholder="Product brand"
+                  className="form-control animated fadeInUp"
+                  type="text"
+                />
+                <br />
+                <textarea
+                  ref={(input) => (categoryRef = input)}
+                  rows={5}
+                  placeholder="Product category"
                   className="form-control animated fadeInUp"
                   type="text"
                 />
