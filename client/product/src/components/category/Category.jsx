@@ -1,8 +1,15 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Container } from 'react-bootstrap';
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineCalendar } from "react-icons/ai";
+import { ProductListBycategory } from "../../ApiRequest/ApiRequest";
 function Category() {
+  
+  useEffect(()=>{
+    ProductListBycategory('printer')
+    ProductListBycategory('laptop')
+    ProductListBycategory('mobile')
+  })
   return (
     <Fragment>
       <Container fluid={true} className="content-body">

@@ -3,9 +3,37 @@ import toast from "react-hot-toast";
 import { hideLoader, showLoader } from "../redux/state-slice/SettingSlice";
 import Store from "../redux/store/Store";
 import { getToken, setToken, setUserDetails } from "../helper/SessionHelper";
-import { SetBrandProduct } from "../redux/state-slice/ProductSlice";
+import { SetBrandProduct, SetCategoryProduct } from "../redux/state-slice/ProductSlice";
 const BaseUrl = "http://localhost:9000/api/v1";
 
+export async function ProductListBycategory(Category) {
+  const AxiosHeader={headers:{'token':getToken()}}
+  try {
+    Store.dispatch(showLoader());
+    let URL = BaseUrl + "/listProductByCategory/"+Category;
+    const res = await axios.get(URL,AxiosHeader);
+
+    Store.dispatch(hideLoader());
+    if (res.status === 200) {
+      if(Category==='printer'){
+        Store.dispatch(SetCategoryProduct(res.data['data']))
+      }
+      else if(Category==='mobile'){
+        Store.dispatch(SetCategoryProduct(res.data['data']))
+      }
+      else if(Category==='laptop'){
+        Store.dispatch(SetCategoryProduct(res.data['data']))
+      }
+    } else {
+      toast.error("Something Went Wrong");
+      return false;
+    }
+  } catch (err) {
+    toast.error("Something Went Wrong");
+    Store.dispatch(hideLoader());
+    return false;
+  }
+}
 export async function ProductListByBrand(Brand) {
   const AxiosHeader={headers:{'token':getToken()}}
   try {
