@@ -1,17 +1,19 @@
 import React, { Fragment, useEffect } from "react";
-import { Container } from 'react-bootstrap';
+import { Container } from "react-bootstrap";
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { ProductListBycategory } from "../../ApiRequest/ApiRequest";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 function Category() {
-  const categoryList=useSelector((state)=>state.product.category)
+  const categoryList = useSelector((state) => state.product.category);
 
-  // useEffect(()=>{
-  //   ProductListBycategory('printer')
-  // //   ProductListBycategory('laptop')
-  // //   ProductListBycategory('mobile')
-  // })
+  useEffect(()=>{
+    (async()=>{
+await ProductListBycategory('printer')
+await ProductListBycategory('laptop')
+await ProductListBycategory('mobile')
+    })()
+  },[])
 
   return (
     <Fragment>
@@ -33,10 +35,7 @@ function Category() {
         </div>
         <div className="row p-0 m-0">
           {categoryList.map((item, i) => (
-            <div
-              
-              className="col-12 col-lg-4 col-sm-6 col-md-4  p-2"
-            >
+            <div key={i.toString()}className="col-12 col-lg-4  col-sm-6 col-md-4  p-2">
               <div className="card h-100">
                 <div className="card-body">
                   <h6 className="animated fadeInUp">{item.title}</h6>
@@ -59,16 +58,18 @@ function Category() {
                     >
                       <AiOutlineDelete />
                     </a>
-                    <a className="badge float-end bg-success">{item.category}</a>
+                    <a className="badge float-end bg-success">
+                      {item.category}
+                    </a>
                   </p>
                 </div>
               </div>
             </div>
-          ))} 
+          ))}
         </div>
       </Container>
     </Fragment>
-  )
+  );
 }
 
-export default Category
+export default Category;

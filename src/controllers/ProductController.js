@@ -4,7 +4,6 @@ exports.createProduct = async(req, res) => {
     let reqBody = req.body;
     reqBody.email = req.headers["email"];
     let newProduct=await ProductModel.create(reqBody);
-    console.log(newProduct)
     if(newProduct){
       res.status(200).json({ status: "success", data: "datas" });
 
@@ -28,7 +27,6 @@ exports.deleteProduct = async (req, res) => {
       res.status(404).json({ status: "fail", data: "No document found to delete" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).json({ status: "fail", message: "Some issues occurred" });
   }
 };
@@ -49,7 +47,6 @@ exports.deleteProduct = async (req, res) => {
             res.status(404).json({ status: "fail", data: "Product not found or no changes applied" });
         }
     } catch (error) {
-        console.error('Error updating product:', error);
         res.status(500).json({ status: "error", message: "Internal server error" });
     }
 };

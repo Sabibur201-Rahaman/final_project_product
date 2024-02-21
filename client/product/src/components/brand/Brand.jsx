@@ -1,31 +1,21 @@
 import React, { Fragment, useEffect } from "react";
-import { Container } from 'react-bootstrap';
+import { Container } from "react-bootstrap";
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { ProductListByBrand } from "../../ApiRequest/ApiRequest";
 import { useSelector } from "react-redux";
 
 function Brand() {
-  const BrandList=useSelector((state)=>state.product.brand)
-
-  // useEffect(()=>{
-  //   ProductListByBrand('Epson')
-  //   // ProductListByBrand('hp')
-  //   // ProductListByBrand('apple')
-  // },[])
+  const BrandList = useSelector((state) => state.product.brand);
 
   useEffect(() => {
-    Promise.all([
-      ProductListByBrand('Epson'),
-      ProductListByBrand('hp'),
-      ProductListByBrand('apple'),
-    ]).then(() => {
-      // Handle completion if necessary
-    }).catch(error => {
-      // Error handling if one of the promises fails
-    });
+    (async()=>{
+// await ProductListByBrand('Epson')
+await ProductListByBrand('apple')
+// await ProductListByBrand('hp')
+    })()
   }, []);
-  
+
   return (
     <Fragment>
       <Container fluid={true} className="content-body">
@@ -47,7 +37,7 @@ function Brand() {
         <div className="row p-0 m-0">
           {BrandList.map((item, i) => (
             <div
-              
+              key={i.toString()}
               className="col-12 col-lg-4 col-sm-6 col-md-4  p-2"
             >
               <div className="card h-100">
@@ -69,7 +59,8 @@ function Brand() {
                     <a
                       // onClick={DeleteItem.bind(this, item._id)}
                       className="icon-nav text-danger mx-1"
-                    >{item.category}
+                    >
+                      {item.category}
                       <AiOutlineDelete />
                     </a>
                     <a className="badge float-end bg-success">{item.brand}</a>
@@ -77,7 +68,7 @@ function Brand() {
                 </div>
               </div>
             </div>
-           ))} 
+          ))}
         </div>
       </Container>
     </Fragment>

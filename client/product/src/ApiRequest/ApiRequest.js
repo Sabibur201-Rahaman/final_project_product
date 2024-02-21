@@ -18,12 +18,12 @@ export async function ProductListBycategory(Category) {
       if(Category==='printer'){
         Store.dispatch(SetCategoryProduct(res.data['data']))
       }
-      // else if(Category==='mobile'){
-      //   Store.dispatch(SetCategoryProduct(res.data['data']))
-      // }
-      // else if(Category==='laptop'){
-      //   Store.dispatch(SetCategoryProduct(res.data['data']))
-      // }
+      else if(Category==='mobile'){
+        Store.dispatch(SetCategoryProduct(res.data['data']))
+      }
+      else if(Category==='laptop'){
+        Store.dispatch(SetCategoryProduct(res.data['data']))
+      }
     } else {
       toast.error("Something Went Wrong");
       return false;
