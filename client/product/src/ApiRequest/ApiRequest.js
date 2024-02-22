@@ -4,7 +4,30 @@ import { hideLoader, showLoader } from "../redux/state-slice/SettingSlice";
 import Store from "../redux/store/Store";
 import { getToken, setToken, setUserDetails } from "../helper/SessionHelper";
 import { SetBrandProduct, SetCategoryProduct } from "../redux/state-slice/ProductSlice";
+import { SetSummary } from "../redux/state-slice/SummarySlice";
 const BaseUrl = "http://localhost:9000/api/v1";
+
+export async function summaryRequest() {
+  const AxiosHeader={headers:{'token':getToken()}}
+  try {
+    Store.dispatch(showLoader());
+    let URL = BaseUrl + "/productsCategoryCounts/"
+    const res = await axios.get(URL,AxiosHeader);
+
+    Store.dispatch(hideLoader());
+    if (res.status === 200) {
+        Store.dispatch(SetSummary(res.data['data']))
+    } else {
+      toast.error("Something Went Wrong");
+      return false;
+    }
+  } catch (err) {
+    console.log(err)
+    toast.error("!Something Went Wrong");
+    Store.dispatch(hideLoader());
+    return false;
+  }
+}
 
 export async function ProductListBycategory(Category) {
   const AxiosHeader={headers:{'token':getToken()}}
