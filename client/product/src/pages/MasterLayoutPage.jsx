@@ -15,10 +15,13 @@ import { FaPlus } from "react-icons/fa";
 import { FaLaptop } from "react-icons/fa";
 import { Toaster } from "react-hot-toast";
 import Footer from '../footer/Footer'
+import { getUserDetails, removeSession } from "../helper/SessionHelper";
 function MasterLayoutPage(props) {
   let contentRef,
     sideNavRef = useRef();
-
+const onLogout=()=>{
+removeSession()
+}
   const MenuBarClickHandler = () => {
     let sideNav = sideNavRef;
     let content = contentRef;
@@ -47,21 +50,21 @@ function MasterLayoutPage(props) {
 
           <div className="float-right h-auto d-flex">
             <div className="user-dropdown">
-              {/* <img className="icon-nav-img icon-nav" src={getUserDetails()['photo']} alt=""/> */}
+              <img className="icon-nav-img icon-nav" src={getUserDetails()?.photo} alt=""/>
               <div className="user-dropdown-content ">
                 <div className="mt-4 text-center">
-                  {/* <img className="icon-nav-img" src={getUserDetails()['photo']} alt=""/> */}
-                  {/* <h6>{getUserDetails()['firstName']}</h6> */}
+                  <img className="icon-nav-img" src={getUserDetails()?.photo} alt=""/>
+                  <h6>{getUserDetails()?.firstName}</h6>
                   <hr className="user-dropdown-divider  p-0" />
                 </div>
                 <NavLink to="/Profile" className="side-bar-item">
                   <AiOutlineUser className="side-bar-item-icon" />
                   <span className="side-bar-item-caption">Profile</span>
                 </NavLink>
-                {/* <a onClick={onLogout}  className="side-bar-item"> */}
+                <a onClick={onLogout}  className="side-bar-item">
                 <AiOutlineLogout className="side-bar-item-icon" />
                 <span className="side-bar-item-caption">Logout</span>
-                {/* </a> */}
+                </a>
               </div>
             </div>
           </div>
@@ -86,6 +89,20 @@ function MasterLayoutPage(props) {
           <span className="side-bar-item-caption">Dashboard</span>
         </NavLink>
 
+        {/* <NavLink
+          className={(navData) =>
+            navData.isActive
+              ? "side-bar-item-active side-bar-item mt-2"
+              : "side-bar-item mt-2"
+          }
+          to="/"
+          end
+        >
+          <RiDashboardLine className="side-bar-item-icon" />
+          <span className="side-bar-item-caption">BrandDashboard</span>
+        </NavLink> */}
+
+
         <NavLink
           className={(navData) =>
             navData.isActive
@@ -97,6 +114,8 @@ function MasterLayoutPage(props) {
           <AiOutlineEdit className="side-bar-item-icon" />
           <span className="side-bar-item-caption">Create New</span>
         </NavLink>
+
+       
 
         <NavLink
           className={(navData) =>

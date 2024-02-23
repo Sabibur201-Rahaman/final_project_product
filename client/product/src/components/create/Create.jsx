@@ -21,7 +21,7 @@ toast.error('description is required')
 else{
   NewProductRequest(title,description,category,brand).then((res)=>{
     if(res===true){
-      navigate('/new')
+      navigate('/')
     }
   })
 }

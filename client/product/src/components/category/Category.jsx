@@ -4,6 +4,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { ProductListBycategory } from "../../ApiRequest/ApiRequest";
 import { useSelector } from "react-redux";
+import { DeleteToDo } from "../../helper/DeleteAlert";
 function Category() {
   const categoryList = useSelector((state) => state.product.category);
 
@@ -14,7 +15,14 @@ await ProductListBycategory('laptop')
 await ProductListBycategory('mobile')
     })()
   },[])
+const DeleteItem=(id)=>{
+DeleteToDo(id).then((result)=>{
+  if(result===true){
+     ProductListBycategory('mobile')
 
+  }
+})
+}
   return (
     <Fragment>
       <Container fluid={true} className="content-body">
@@ -53,7 +61,7 @@ await ProductListBycategory('mobile')
                       <AiOutlineEdit />
                     </a> */}
                     <a
-                      // onClick={DeleteItem.bind(this, item._id)}
+                      onClick={DeleteItem.bind(this,item._id)}
                       className="icon-nav text-danger mx-1"
                     >
                       <AiOutlineDelete />

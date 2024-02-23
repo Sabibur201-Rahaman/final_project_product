@@ -3,26 +3,77 @@ import toast from "react-hot-toast";
 import { hideLoader, showLoader } from "../redux/state-slice/SettingSlice";
 import Store from "../redux/store/Store";
 import { getToken, setToken, setUserDetails } from "../helper/SessionHelper";
-import { SetBrandProduct, SetCategoryProduct } from "../redux/state-slice/ProductSlice";
+import {
+  SetBrandProduct,
+  SetCategoryProduct,
+} from "../redux/state-slice/ProductSlice";
 import { SetSummary } from "../redux/state-slice/SummarySlice";
+import { SetBrandSummary } from "../redux/state-slice/BrandSummSlice";
 const BaseUrl = "http://localhost:9000/api/v1";
 
-export async function summaryRequest() {
-  const AxiosHeader={headers:{'token':getToken()}}
+export async function DeleteRequest(id) {
+  const AxiosHeader = { headers: { token: getToken() } };
   try {
     Store.dispatch(showLoader());
-    let URL = BaseUrl + "/productsCategoryCounts/"
-    const res = await axios.get(URL,AxiosHeader);
+
+    let URL = BaseUrl + "/deleteProduct/" + id;
+
+    const res = await axios.post(URL,{},AxiosHeader);
 
     Store.dispatch(hideLoader());
     if (res.status === 200) {
-        Store.dispatch(SetSummary(res.data['data']))
+      toast.success("successfully deleted");
+      return true;
     } else {
       toast.error("Something Went Wrong");
       return false;
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
+    toast.error("!Something Went Wrong");
+    Store.dispatch(hideLoader());
+    return false;
+  }
+}
+
+export async function BrandSummRequest() {
+  const AxiosHeader = { headers: { token: getToken() } };
+  try {
+    Store.dispatch(showLoader());
+    let URL = BaseUrl + "/productsBrandCounts/";
+    const res = await axios.get(URL, AxiosHeader);
+
+    Store.dispatch(hideLoader());
+    if (res.status === 200) {
+      Store.dispatch(SetBrandSummary(res.data["data"]));
+    } else {
+      toast.error("Something Went Wrong");
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    toast.error("!Something Went Wrong");
+    Store.dispatch(hideLoader());
+    return false;
+  }
+}
+
+export async function summaryRequest() {
+  const AxiosHeader = { headers: { token: getToken() } };
+  try {
+    Store.dispatch(showLoader());
+    let URL = BaseUrl + "/productsCategoryCounts/";
+    const res = await axios.get(URL, AxiosHeader);
+
+    Store.dispatch(hideLoader());
+    if (res.status === 200) {
+      Store.dispatch(SetSummary(res.data["data"]));
+    } else {
+      toast.error("Something Went Wrong");
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
     toast.error("!Something Went Wrong");
     Store.dispatch(hideLoader());
     return false;
@@ -30,73 +81,72 @@ export async function summaryRequest() {
 }
 
 export async function ProductListBycategory(Category) {
-  const AxiosHeader={headers:{'token':getToken()}}
+  const AxiosHeader = { headers: { token: getToken() } };
   try {
     Store.dispatch(showLoader());
-    let URL = BaseUrl + "/listProductByCategory/"+Category;
-    const res = await axios.get(URL,AxiosHeader);
+    let URL = BaseUrl + "/listProductByCategory/" + Category;
+    const res = await axios.get(URL, AxiosHeader);
 
     Store.dispatch(hideLoader());
     if (res.status === 200) {
-      if(Category==='printer'){
-        Store.dispatch(SetCategoryProduct(res.data['data']))
-      }
-      else if(Category==='mobile'){
-        Store.dispatch(SetCategoryProduct(res.data['data']))
-      }
-      else if(Category==='laptop'){
-        Store.dispatch(SetCategoryProduct(res.data['data']))
+      if (Category === "printer") {
+        Store.dispatch(SetCategoryProduct(res.data["data"]));
+      } else if (Category === "mobile") {
+        Store.dispatch(SetCategoryProduct(res.data["data"]));
+      } else if (Category === "laptop") {
+        Store.dispatch(SetCategoryProduct(res.data["data"]));
       }
     } else {
       toast.error("Something Went Wrong");
       return false;
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
     toast.error("!Something Went Wrong");
     Store.dispatch(hideLoader());
     return false;
   }
 }
 export async function ProductListByBrand(Brand) {
-  const AxiosHeader={headers:{'token':getToken()}}
+  const AxiosHeader = { headers: { token: getToken() } };
   try {
     Store.dispatch(showLoader());
-    let URL = BaseUrl + "/listProductByBrand/"+Brand;
-    const res = await axios.get(URL,AxiosHeader);
+    let URL = BaseUrl + "/listProductByBrand/" + Brand;
+    const res = await axios.get(URL, AxiosHeader);
 
     Store.dispatch(hideLoader());
     if (res.status === 200) {
-      if(Brand==='Epson'){
-        Store.dispatch(SetBrandProduct(res.data['data']))
-      }
-      else if(Brand==='hp'){
-        Store.dispatch(SetBrandProduct(res.data['data']))
-      }
-      else if(Brand==='apple'){
-        Store.dispatch(SetBrandProduct(res.data['data']))
+      if (Brand === "Epson") {
+        Store.dispatch(SetBrandProduct(res.data["data"]));
+      } else if (Brand === "hp") {
+        Store.dispatch(SetBrandProduct(res.data["data"]));
+      } else if (Brand === "apple") {
+        Store.dispatch(SetBrandProduct(res.data["data"]));
       }
     } else {
       toast.error("Something Went Wrong");
       return false;
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
     toast.error("Something Went Wrong");
     Store.dispatch(hideLoader());
     return false;
   }
 }
 
-
-
-export async function NewProductRequest(title, description,category,brand) {
-  const AxiosHeader={headers:{'token':getToken()}}
+export async function NewProductRequest(title, description, category, brand) {
+  const AxiosHeader = { headers: { token: getToken() } };
   try {
     Store.dispatch(showLoader());
     let URL = BaseUrl + "/createProduct";
-    let PostBody = { title: title, description: description,category:category,brand:brand };
-    const res = await axios.post(URL, PostBody,AxiosHeader);
+    let PostBody = {
+      title: title,
+      description: description,
+      category: category,
+      brand: brand,
+    };
+    const res = await axios.post(URL, PostBody, AxiosHeader);
 
     Store.dispatch(hideLoader());
     if (res.status === 200) {

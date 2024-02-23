@@ -5,7 +5,9 @@ const DashBoard = lazy(() => import("../components/dashBoard/DashBoard"));
 function DashBoardPage() {
   return (
     <MasterLayoutPage>
-      <h2>DashBoard</h2>
+      <div className="text-center">
+      </div>
+
       <Suspense fallback={<LazyLoader />}>
         <DashBoard />
       </Suspense>

@@ -142,3 +142,8 @@ exports.productsCategoryCounts = async (req, res) => {
   }
 }
 
+// const demo=(num1,num2)=>{
+
+// }
+
+// demo(10,5)

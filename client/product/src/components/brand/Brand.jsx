@@ -4,6 +4,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { ProductListByBrand } from "../../ApiRequest/ApiRequest";
 import { useSelector } from "react-redux";
+import { DeleteToDo } from "../../helper/DeleteAlert";
 
 function Brand() {
   const BrandList = useSelector((state) => state.product.brand);
@@ -15,6 +16,14 @@ await ProductListByBrand('apple')
 // await ProductListByBrand('hp')
     })()
   }, []);
+
+  const DeleteItem=(id)=>{
+    DeleteToDo(id).then((result)=>{
+      if(result===true){
+        ProductListByBrand('apple')    
+      }
+    })
+    }
 
   return (
     <Fragment>
@@ -57,7 +66,7 @@ await ProductListByBrand('apple')
                       <AiOutlineEdit />
                     </a> */}
                     <a
-                      // onClick={DeleteItem.bind(this, item._id)}
+                      onClick={DeleteItem.bind(this, item._id)}
                       className="icon-nav text-danger mx-1"
                     >
                       {item.category}

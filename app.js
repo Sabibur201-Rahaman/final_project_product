@@ -6,6 +6,8 @@ const rateLimit =require('express-rate-limit');
 const helmet =require('helmet');
 const mongoSanitize =require('express-mongo-sanitize');
 
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 const xss =require('xss-clean');
 const hpp =require('hpp');
 const cors =require('cors');
