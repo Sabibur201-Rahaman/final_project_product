@@ -8,7 +8,8 @@ const router=express.Router()
 
 router.post("/registration",UserController.registration);
 router.post("/login",UserController.login);
-router.get("/profileUpdate",AuthVerifyMiddleware,UserController.profileUpdate);
+router.post("/profileUpdate",AuthVerifyMiddleware,UserController.profileUpdate);
+router.get("/profileDetails",AuthVerifyMiddleware,UserController.profileDetails);
 
 // Product
 router.post("/createProduct",AuthVerifyMiddleware,ProductController.createProduct);

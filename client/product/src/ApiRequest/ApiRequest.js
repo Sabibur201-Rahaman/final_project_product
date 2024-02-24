@@ -9,7 +9,30 @@ import {
 } from "../redux/state-slice/ProductSlice";
 import { SetSummary } from "../redux/state-slice/SummarySlice";
 import { SetBrandSummary } from "../redux/state-slice/BrandSummSlice";
+import { SetProfile } from "../redux/state-slice/ProfileSlice";
 const BaseUrl = "http://localhost:9000/api/v1";
+
+export async function GetProfileDetails() {
+  const AxiosHeader = { headers: { token: getToken() } };
+  try {
+    Store.dispatch(showLoader());
+    let URL = BaseUrl + "/profileDetails/";
+    const res = await axios.get(URL, AxiosHeader);
+
+    Store.dispatch(hideLoader());
+    if (res.status === 200) {
+      Store.dispatch(SetProfile(res.data["data"]));
+    } else {
+      toast.error("Something Went Wrong");
+      return false;
+    }
+  } catch (err) {
+    console.log(err)
+    toast.error("!Something Went Wrong");
+    Store.dispatch(hideLoader());
+    return false;
+  }
+}
 
 export async function DeleteRequest(id) {
   const AxiosHeader = { headers: { token: getToken() } };
@@ -51,7 +74,6 @@ export async function BrandSummRequest() {
       return false;
     }
   } catch (err) {
-    console.log(err);
     toast.error("!Something Went Wrong");
     Store.dispatch(hideLoader());
     return false;
@@ -232,5 +254,48 @@ export async function RegistrationRequest(
     Store.dispatch(hideLoader());
     toast.error("Something went wrong");
     return false;
+  }
+}
+
+export async function ProfileUpdateRequest(email, firstName, lastName, mobile, password, photo) {
+  const AxiosHeader = { headers: { token: getToken() } };
+  try {
+      Store.dispatch(showLoader());
+
+      let URL = BaseUrl + "/profileUpdate/";
+
+      let PostBody = {
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          mobile: mobile,
+          password: password,
+          photo: photo
+      };
+      let UserDetails = {
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          mobile: mobile,
+          photo: photo
+      };
+
+      const res = await axios.post(URL, PostBody, AxiosHeader);
+
+      Store.dispatch(hideLoader());
+
+      if (res.status === 200) {
+          toast.error("Profile Update Success");
+          setUserDetails(UserDetails);
+          return true;
+      } else {
+          ErrorToast("Something Went Wrong");
+          return false;
+      }
+  } catch (err) {
+    console.log(err)
+      toast.error("!Something Went Wrong");
+      Store.dispatch(hideLoader());
+      return false;
   }
 }

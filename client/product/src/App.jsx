@@ -10,10 +10,10 @@ import FullScreenLoaderPage from "./pages/FullScreenLoaderPage";
 import LazyLoaderPage from "./pages/LazyLoaderPage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
-import profilePage from "./pages/profilePage";
 import RegistrationPage from "./pages/RegistrationPage";
 import FullScreenLoader from "./components/masterLayout/FullScreenLoader";
 import { getToken } from "./helper/SessionHelper";
+import ProfilePage from './pages/ProfilePage';
 function App() {
   if (getToken()) {
     return (
@@ -25,7 +25,7 @@ function App() {
             <Route exact path="/create" element={<CreatePage />} />
             <Route exact path="/category" element={<CategoryPage />} />
             <Route exact path="/new" element={<NewPage />} />
-            <Route exact path="/profile" element={<profilePage />} />
+            <Route exact path="/profile" element={<ProfilePage />} />
             
           </Routes>
         </BrowserRouter>
