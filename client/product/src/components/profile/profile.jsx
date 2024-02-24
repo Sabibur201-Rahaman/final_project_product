@@ -8,20 +8,29 @@ import { IsEmail, IsEmpty, IsMobile, getBase64 } from "../../helper/FormHelper";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getUserDetails } from "../../helper/SessionHelper";
-
-function profile() {  
-  let emailRef,
-    firstNameRef,
-    lastNameRef,
-    mobileRef,
-    passwordRef,
-    userImgRef,
-    userImgView = useRef();
-  useEffect(() => {
-    (async () => {
-      await GetProfileDetails();
-    })();
-  }, []);
+const initialValue = {
+  email: "",
+  firstName: "",
+  lastName: "",
+  mobile: "",
+  password: "",
+  photo: "",
+};
+function profile() {
+  const [data, setData] = useState(initialValue);
+  const handleChange = (e) => {
+    console.log(e.target.value)
+    // setData({
+    //   ...data,
+    //   [e.name]: e.target.value,
+    // });
+  };
+  console.log(data)
+  // useEffect(() => {
+  //   (async () => {
+  //     await GetProfileDetails();
+  //   })();
+  // }, []);
   const navigate = useNavigate();
   // const ProfileData = useSelector((state) => state.profile.ProfileValue);
   const ProfileData = getUserDetails();
@@ -32,43 +41,39 @@ function profile() {
     });
   };
 
-  const UpdateMyProfile = () => {
-    let email = emailRef.value;
-    let firstName = firstNameRef.value;
-    let lastName = lastNameRef.value;
-    let mobile = mobileRef.value;
-    let password = passwordRef.value;
-    let photo = userImgView.src;
-    if (IsEmail(email)) {
-      toast.error("Valid Email Address is required");
-    } else if (IsEmpty(firstName)) {
-      toast.error("firstName is required");
-    } else if (IsEmpty(lastName)) {
-      toast.error("lastName is required");
-    } else if (!IsMobile(mobile)) {
-      toast.error("valid mobile no is required");
-    } else if (IsEmpty(password)) {
-      toast.error("password is required");
-    } else {
-      ProfileUpdateRequest(
-        email,
-        firstName,
-        lastName,
-        mobile,
-        password,
-        photo
-      ).then((result) => {
-        if (result === true) {
-          navigate("/");
-        }
-      });
-    }
-  };
-  const [FirstName, setFirstName] = useState();
-  function ChangeFirstName(e) {
-    setFirstName(e.target.value);
-    
-  }
+  // const UpdateMyProfile = () => {
+  //   let email = emailRef.value;
+  //   let firstName = firstNameRef.value;
+  //   let lastName = lastNameRef.value;
+  //   let mobile = mobileRef.value;
+  //   let password = passwordRef.value;
+  //   let photo = userImgView.src;
+  //   if (IsEmail(email)) {
+  //     toast.error("Valid Email Address is required");
+  //   } else if (IsEmpty(firstName)) {
+  //     toast.error("firstName is required");
+  //   } else if (IsEmpty(lastName)) {
+  //     toast.error("lastName is required");
+  //   } else if (!IsMobile(mobile)) {
+  //     toast.error("valid mobile no is required");
+  //   } else if (IsEmpty(password)) {
+  //     toast.error("password is required");
+  //   } else {
+  //     ProfileUpdateRequest(
+  //       email,
+  //       firstName,
+  //       lastName,
+  //       mobile,
+  //       password,
+  //       photo
+  //     ).then((result) => {
+  //       if (result === true) {
+  //         navigate("/");
+  //       }
+  //     });
+  //   }
+  // };
+
   return (
     <div className="container">
       <div className="row d-flex justify-content-center">
@@ -77,7 +82,7 @@ function profile() {
             <div className="card-body">
               <div className="container-fluid">
                 <img
-                  ref={(input) => (userImgView = input)}
+                  // ref={(input) => (userImgView = input)}
                   className="icon-nav-img-lg"
                   src={ProfileData?.photo}
                   alt=""
@@ -87,8 +92,8 @@ function profile() {
                   <div className="col-4 p-2">
                     <label>Profile Picture</label>
                     <input
-                      onChange={PreviewImage}
-                      ref={(input) => (userImgRef = input)}
+                      // onChange={PreviewImage}
+                      // ref={(input) => (userImgRef = input)}
                       className="form-control animated fadeInUp"
                       type="file"
                     />
@@ -97,61 +102,65 @@ function profile() {
                     <label>Email Address</label>
                     <input
                       key={Date.now()}
-                      value={ProfileData?.email}
-                      readOnly={true}
-                      ref={(input) => (emailRef = input)}
                       placeholder="User Email"
                       className="form-control animated fadeInUp"
                       type="email"
+                      value={data?.email}
+                      name="email"
+                      onChange={(e)=>handleChange(e)}
                     />
                   </div>
                   <div className="col-4 p-2">
                     <label>First Name</label>
                     <input
                       key={Date.now()}
-                      // defaultValue={userFirstName?.FirstName}
-                      onChange={ChangeFirstName}
                       placeholder="First Name"
                       className="form-control animated fadeInUp"
                       type="text"
+                      value={data?.firstName}
+                      name="firstName"
+                      onChange={(e)=>handleChange(e)}
                     />
                   </div>
                   <div className="col-4 p-2">
                     <label>Last Name</label>
                     <input
                       key={Date.now()}
-                      value={ProfileData?.lastName}
-                      ref={(input) => (lastNameRef = input)}
                       placeholder="Last Name"
                       className="form-control animated fadeInUp"
                       type="text"
+                      value={data?.lastName}
+                      name="lastName"
+                      onChange={(e)=>handleChange(e)}
                     />
                   </div>
                   <div className="col-4 p-2">
                     <label>Mobile</label>
                     <input
                       key={Date.now()}
-                      value={ProfileData?.mobile}
-                      ref={(input) => (mobileRef = input)}
                       placeholder="Mobile"
                       className="form-control animated fadeInUp"
-                      type="mobile"
+                      type="text"
+                      value={data?.mobile}
+                      name="mobile"
+                      onChange={(e)=>handleChange(e)}
                     />
                   </div>
                   <div className="col-4 p-2">
                     <label>Password</label>
                     <input
                       key={Date.now()}
-                      value={ProfileData?.password}
-                      ref={(input) => (passwordRef = input)}
                       placeholder="User Password"
                       className="form-control animated fadeInUp"
                       type="password"
+                      value={data?.password}
+                      name="password"
+                      onChange={(e)=>handleChange(e)}
                     />
                   </div>
                   <div className="col-4 p-2">
                     <button
-                      onClick={UpdateMyProfile}
+                      // onClick={UpdateMyProfile}
                       className="btn w-100 float-end btn-primary animated fadeInUp"
                     >
                       Update
