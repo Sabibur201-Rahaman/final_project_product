@@ -18,7 +18,6 @@ export async function GetProfileDetails() {
     Store.dispatch(showLoader());
     let URL = BaseUrl + "/profileDetails/";
     const res = await axios.get(URL, AxiosHeader);
-
     Store.dispatch(hideLoader());
     if (res.status === 200) {
       Store.dispatch(SetProfile(res.data["data"]));
